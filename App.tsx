@@ -1,4 +1,4 @@
-import Groups from './src/screens/Groups/intdex';
+import Groups from '@screens/Groups/intdex';
 
 export default function App() {
   return (
