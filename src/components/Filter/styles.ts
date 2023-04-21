@@ -9,7 +9,7 @@ export const Container = styled(TouchableOpacity)<FilterStyleProps>`
   ${({ theme, isActive }) =>
     isActive &&
     css`
-      border: 1px solid ${theme.COLORS.GRAY_700};
+      border: 1px solid ${theme.COLORS.GREEN_700};
     `};
 
   border-radius: 4px;
@@ -24,7 +24,7 @@ export const Container = styled(TouchableOpacity)<FilterStyleProps>`
 
 export const Title = styled.Text`
     text-transform: uppercase;
-    
+
   ${({ theme }) => css`
     font-family: ${theme.FONT_FAMILY.BOLD};
     font-size: ${theme.FONT_SIZE.SM}px;
