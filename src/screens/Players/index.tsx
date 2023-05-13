@@ -16,6 +16,7 @@ import { AppError } from "@utils/AppError";
 import { playerAddByGroup } from "@storage/player/playerAddByGroup";
 import { playersGetByGroupAndTeam } from "@storage/player/playersGetByGroupAndTeam";
 import { playerStorageDTO } from "@storage/player/playerStorageDTO";
+import { playerRemoveByGroup } from "@storage/player/playerRemoveByGroup";
 
 type RouteParams = {
   group: string;
@@ -55,7 +56,7 @@ export function Players() {
     }
   }
 
-    async function fetchPlayersByTeam() {
+  async function fetchPlayersByTeam() {
       try {
         const playersByTeam = await playersGetByGroupAndTeam(group, team);
         setPlayers(playersByTeam);
@@ -63,8 +64,19 @@ export function Players() {
         console.log(error);
         Alert.alert("Pessoas","Não foi possível carregar as pessoas do time selecionado.")
       }
-    }
+  }
 
+  async function handlePlayerRemove(playerName: string) {
+    try {
+      await playerRemoveByGroup(playerName, group);
+      fetchPlayersByTeam();
+
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Remover pessoa", "Não possível remover essa pessoa.")
+    }
+    
+  }
     useEffect(() => {
       console.log("useEffect executou!");
       fetchPlayersByTeam();
@@ -105,7 +117,7 @@ export function Players() {
       <FlatList
         data={players}
         keyExtractor={(item) => item.name}
-        renderItem={({ item }) => <PlayerCard name={item.name} onRemove={() => {}}/>}
+        renderItem={({ item }) => <PlayerCard name={item.name} onRemove={() => handlePlayerRemove(item.name)}/>}
         ListEmptyComponent={() => (
           <ListEmpty
             message="Não há pessoas nesse time."
